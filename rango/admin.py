@@ -1,6 +1,11 @@
 from django.contrib import admin
-from django.contrib.admin.sites import AdminSite
-from rango.models import Category, Page, PageAdmin
+from rango.models import Category, Page
 
-admin.site.register(Category)
+class PageAdmin(admin.ModelAdmin):
+    list_display = ('title', 'category', 'url')
+
+class CategoryAdmin(admin.ModelAdmin):
+    prepopulated_fields = {'slug':('name', )}
+    
+admin.site.register(Category, CategoryAdmin)
 admin.site.register(Page, PageAdmin)
